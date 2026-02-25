@@ -1,11 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
-public class BoatControllers : MonoBehaviour
+public class BoatController : MonoBehaviour
 {
     public Tilemap tilemap;
     public Vector3Int currentCell;  // current pos
     private int facing = 0;         // Facing Dir    
+
+    public int speed = 0;
+    public int minSpeed = -2;
+    public int maxSpeed = 4;
+
+    public List<BoatCommand> commandQueue = new List<BoatCommand>();
+    public int maxCommands = 3;
+
+    public bool Selected = false;
+
+    public void AddCommand(BoatCommand command)
+    {
+        commandQueue.Add(command);
+        if (commandQueue.Count > maxCommands)
+        {
+            commandQueue.RemoveAt(maxCommands-1);
+        }
+    }
+
+
     private BoatActions actions;
     /* 
     0 = Top
@@ -14,9 +35,6 @@ public class BoatControllers : MonoBehaviour
     3 = Bottom
     4 = bottom left
     5 = top left
-
-    
-    
     */
     private readonly Vector3Int[] evenDirs = new Vector3Int[]
     {
@@ -41,9 +59,14 @@ public class BoatControllers : MonoBehaviour
     void Start()
     {
         SnapToGrid();
+        TurnManager.Instance.boats.Add(this);
     }
     private void Awake()
     {
+        
+        actions = new BoatActions();
+
+        /*
         actions = new BoatActions();
 
         //move
@@ -61,8 +84,15 @@ public class BoatControllers : MonoBehaviour
             if (input.x > 0) RotateRight();
             if (input.x < 0) RotateLeft();
         };
+        */
     }
 
+    public void SetSelected(bool selected)
+    {
+        Selected = selected;
+        // Change color or something to indicate selection later
+    }
+    
     private void OnEnable()
     {
         actions.Enable();
@@ -78,24 +108,24 @@ public class BoatControllers : MonoBehaviour
         transform.position = tilemap.GetCellCenterWorld(currentCell);
     }
 
-    private void Forward()
+    public void Forward()
     {
         Move(getDirs()[facing]);
     }
 
-    private void Backward()
+    public void Backward()
     {
         int backDir = (facing + 3) % 6;
         Move(getDirs()[backDir]);
     }
 
-    private void RotateLeft()
+    public void RotateLeft()
     {
         facing = (facing + 5) % 6;
         RotatePic();
     }
 
-    private void RotateRight()
+    public void RotateRight()
     {
         facing = (facing + 1) % 6;
         RotatePic();
@@ -112,6 +142,7 @@ public class BoatControllers : MonoBehaviour
             return oddDirs;
         }
     }
+    
     private void Move(Vector3Int offset)
     {
         Vector3Int targetCell = currentCell + offset;
@@ -125,11 +156,59 @@ public class BoatControllers : MonoBehaviour
         SnapToGrid();
     }
 
-
-
     void RotatePic()
     {
         transform.rotation = Quaternion.Euler(0,0,-facing*60f);
     }
+
+    public void ExecuteNextCommand()
+    {
+        if (commandQueue.Count == 0)
+            return;
+
+        BoatCommand currentCommand = commandQueue[0];
+        commandQueue.RemoveAt(0);
+
+        if (currentCommand.commandType == BoatCommandType.Forward)
+        {
+            speed += 1;
+            if (speed > maxSpeed) 
+            {
+                speed = maxSpeed;
+            }
+        } else if (currentCommand.commandType == BoatCommandType.Backward)
+        {
+            speed -= 1;
+            if (speed < minSpeed) 
+            {
+                speed = minSpeed;
+            }
+        }
+
+        if (speed > 0)
+        {
+            for (int i = 0; i < speed; i++)
+            {
+                Forward();
+            }
+        } else if (speed < 0)
+        {
+            int backwardSpeed = -speed;
+            for (int i = 0; i < backwardSpeed; i++)
+            {
+                Backward();
+            }
+        }
+
+        if (currentCommand.commandType == BoatCommandType.RotateLeft)
+        {
+            RotateLeft();
+        } else if (currentCommand.commandType == BoatCommandType.RotateRight)
+        {
+            RotateRight();
+        }
+    }
+
+    
 
 }
