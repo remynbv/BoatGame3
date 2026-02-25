@@ -108,6 +108,11 @@ public class BoatController : MonoBehaviour
         transform.position = tilemap.GetCellCenterWorld(currentCell);
     }
 
+    public int GetFacing()
+    {
+        return facing;
+    }
+
     public void Forward()
     {
         Move(getDirs()[facing]);
@@ -142,7 +147,7 @@ public class BoatController : MonoBehaviour
             return oddDirs;
         }
     }
-    
+
     private void Move(Vector3Int offset)
     {
         Vector3Int targetCell = currentCell + offset;
@@ -209,6 +214,16 @@ public class BoatController : MonoBehaviour
         }
     }
 
-    
+    public Vector3Int[] GetDirs(int y)
+    {
+        if (y % 2 == 0)
+        {
+            return evenDirs;
+        }
+        else
+        {
+            return oddDirs;
+        }
+    }
 
 }
