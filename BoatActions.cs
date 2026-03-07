@@ -118,6 +118,33 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tab"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ba31257-eb1b-410e-9156-fc839e1cd12b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Execute"",
+                    ""type"": ""Button"",
+                    ""id"": ""f83cc4f2-7130-4634-8bd8-1cdb3a9652af"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NoAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""e1e23102-46f5-4e55-8894-d2d9b4b6c755"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -197,6 +224,39 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2dfe71f-2e5d-4ca5-af1f-2e605a94a019"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e3958b09-c73e-4990-8a26-8c34e9403552"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06dea793-b757-447b-8c34-49ed369a0154"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NoAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -214,6 +274,9 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_Rotation = m_Movement.FindAction("Rotation", throwIfNotFound: true);
         m_Movement_Select = m_Movement.FindAction("Select", throwIfNotFound: true);
+        m_Movement_Tab = m_Movement.FindAction("Tab", throwIfNotFound: true);
+        m_Movement_Execute = m_Movement.FindAction("Execute", throwIfNotFound: true);
+        m_Movement_NoAction = m_Movement.FindAction("NoAction", throwIfNotFound: true);
     }
 
     ~@BoatActions()
@@ -297,6 +360,9 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_Rotation;
     private readonly InputAction m_Movement_Select;
+    private readonly InputAction m_Movement_Tab;
+    private readonly InputAction m_Movement_Execute;
+    private readonly InputAction m_Movement_NoAction;
     /// <summary>
     /// Provides access to input actions defined in input action map "Movement".
     /// </summary>
@@ -320,6 +386,18 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Movement/Select".
         /// </summary>
         public InputAction @Select => m_Wrapper.m_Movement_Select;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Tab".
+        /// </summary>
+        public InputAction @Tab => m_Wrapper.m_Movement_Tab;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Execute".
+        /// </summary>
+        public InputAction @Execute => m_Wrapper.m_Movement_Execute;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/NoAction".
+        /// </summary>
+        public InputAction @NoAction => m_Wrapper.m_Movement_NoAction;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -355,6 +433,15 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
             @Select.started += instance.OnSelect;
             @Select.performed += instance.OnSelect;
             @Select.canceled += instance.OnSelect;
+            @Tab.started += instance.OnTab;
+            @Tab.performed += instance.OnTab;
+            @Tab.canceled += instance.OnTab;
+            @Execute.started += instance.OnExecute;
+            @Execute.performed += instance.OnExecute;
+            @Execute.canceled += instance.OnExecute;
+            @NoAction.started += instance.OnNoAction;
+            @NoAction.performed += instance.OnNoAction;
+            @NoAction.canceled += instance.OnNoAction;
         }
 
         /// <summary>
@@ -375,6 +462,15 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
             @Select.started -= instance.OnSelect;
             @Select.performed -= instance.OnSelect;
             @Select.canceled -= instance.OnSelect;
+            @Tab.started -= instance.OnTab;
+            @Tab.performed -= instance.OnTab;
+            @Tab.canceled -= instance.OnTab;
+            @Execute.started -= instance.OnExecute;
+            @Execute.performed -= instance.OnExecute;
+            @Execute.canceled -= instance.OnExecute;
+            @NoAction.started -= instance.OnNoAction;
+            @NoAction.performed -= instance.OnNoAction;
+            @NoAction.canceled -= instance.OnNoAction;
         }
 
         /// <summary>
@@ -449,5 +545,26 @@ public partial class @BoatActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelect(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Tab" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTab(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Execute" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnExecute(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "NoAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNoAction(InputAction.CallbackContext context);
     }
 }

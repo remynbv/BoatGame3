@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class BoatSelection : MonoBehaviour
 {
+    private BoatActions actions;
     public static BoatController SelectedBoat;
 
     public void SelectBoat(BoatController boat)
@@ -13,7 +14,7 @@ public class BoatSelection : MonoBehaviour
         }
         SelectedBoat = boat;
         boat.SetSelected(true);
-        print("Selected boat: " + boat.name);
+        //print("Selected boat: " + boat.name);
     }
 
     Vector3 mousePosition;
@@ -34,12 +35,62 @@ public class BoatSelection : MonoBehaviour
 
             if (clickObject)
             {
-                BoatController boat = clickObject.GetComponent<BoatController>();
+                BoatController boat = clickObject.GetComponentInParent<BoatController>();
                 if (boat)
                 {
                     SelectBoat(boat);
                 }
             }
         }
+    }
+
+    private void Awake()
+    {
+        actions = new BoatActions();
+        actions.Movement.Tab.performed += ctx =>
+        {
+            if (SelectedBoat == null)
+            {
+                SelectBoat(TurnManager.Instance.boats[0]);
+            }
+            else
+            {
+                int index = TurnManager.Instance.boats.IndexOf(SelectedBoat);
+                index = (index + 1) % TurnManager.Instance.boats.Count;
+                SelectBoat(TurnManager.Instance.boats[index]);
+            }
+        };
+        
+        actions.Movement.Move.performed += ctx =>
+        {
+            if (SelectedBoat == null) return;
+            Vector2 input = ctx.ReadValue<Vector2>();
+            if (input.y > 0) SelectedBoat.AddCommand(new BoatCommand(BoatCommandType.Forward));
+            if (input.y < 0) SelectedBoat.AddCommand(new BoatCommand(BoatCommandType.Backward));
+        };
+
+        actions.Movement.Rotation.performed += ctx =>
+        {
+            if (SelectedBoat == null) return;
+            Vector2 input = ctx.ReadValue<Vector2>();
+            if (input.x > 0) SelectedBoat.AddCommand(new BoatCommand(BoatCommandType.RotateRight));
+            if (input.x < 0) SelectedBoat.AddCommand(new BoatCommand(BoatCommandType.RotateLeft));
+        };
+
+        actions.Movement.NoAction.performed += ctx =>
+        {
+            if (SelectedBoat == null) return;
+            SelectedBoat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
+        };
+    }
+
+    private void OnEnable()
+    {
+        actions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        actions.Disable();
     }
 }

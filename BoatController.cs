@@ -16,16 +16,23 @@ public class BoatController : MonoBehaviour
     public int maxCommands = 3;
 
     public bool Selected = false;
+    public bool hasCrashed = false;
+
+    public int hitPoints = 2;
+    public DisplayOrders tabOrders;
+    public SpriteRenderer boatImage;
 
     public void AddCommand(BoatCommand command)
     {
-        commandQueue.Add(command);
-        if (commandQueue.Count > maxCommands)
+        if (TurnManager.Instance.ordersOpen)
         {
-            commandQueue.RemoveAt(maxCommands-1);
+            commandQueue.Add(command);
+            if (commandQueue.Count > maxCommands)
+            {
+                commandQueue.RemoveAt(maxCommands-1);
+            }
         }
     }
-
 
     private BoatActions actions;
     /* 
@@ -60,31 +67,11 @@ public class BoatController : MonoBehaviour
     {
         SnapToGrid();
         TurnManager.Instance.boats.Add(this);
+        boatImage = GetComponent<SpriteRenderer>();
     }
     private void Awake()
     {
-        
         actions = new BoatActions();
-
-        /*
-        actions = new BoatActions();
-
-        //move
-        actions.Movement.Move.performed += ctx =>
-        {
-            Vector2 input = ctx.ReadValue<Vector2>();
-            if (input.y > 0) Forward();
-            if (input.y < 0) Backward();
-        };
-
-        //rotte
-        actions.Movement.Rotation.performed += ctx =>
-        {
-            Vector2 input = ctx.ReadValue<Vector2>();
-            if (input.x > 0) RotateRight();
-            if (input.x < 0) RotateLeft();
-        };
-        */
     }
 
     public void SetSelected(bool selected)
@@ -103,7 +90,7 @@ public class BoatController : MonoBehaviour
         actions.Disable();
     }
 
-    public void SnapToGrid() //Snaps to grid
+    public void SnapToGrid() 
     {
         transform.position = tilemap.GetCellCenterWorld(currentCell);
     }
@@ -166,54 +153,6 @@ public class BoatController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0,0,-facing*60f);
     }
 
-    public void ExecuteNextCommand()
-    {
-        if (commandQueue.Count == 0)
-            return;
-
-        BoatCommand currentCommand = commandQueue[0];
-        commandQueue.RemoveAt(0);
-
-        if (currentCommand.commandType == BoatCommandType.Forward)
-        {
-            speed += 1;
-            if (speed > maxSpeed) 
-            {
-                speed = maxSpeed;
-            }
-        } else if (currentCommand.commandType == BoatCommandType.Backward)
-        {
-            speed -= 1;
-            if (speed < minSpeed) 
-            {
-                speed = minSpeed;
-            }
-        }
-
-        if (speed > 0)
-        {
-            for (int i = 0; i < speed; i++)
-            {
-                Forward();
-            }
-        } else if (speed < 0)
-        {
-            int backwardSpeed = -speed;
-            for (int i = 0; i < backwardSpeed; i++)
-            {
-                Backward();
-            }
-        }
-
-        if (currentCommand.commandType == BoatCommandType.RotateLeft)
-        {
-            RotateLeft();
-        } else if (currentCommand.commandType == BoatCommandType.RotateRight)
-        {
-            RotateRight();
-        }
-    }
-
     public Vector3Int[] GetDirs(int y)
     {
         if (y % 2 == 0)
@@ -224,6 +163,40 @@ public class BoatController : MonoBehaviour
         {
             return oddDirs;
         }
+    }
+
+    public void takeDamage()
+    {
+        hitPoints -= 1;
+        if (hitPoints <= 0)
+        {
+            TurnManager.Instance.deadBoats.Add(this);
+            tabOrders.setDestroyed();
+        }
+        else if (hitPoints == 1)
+        {
+            tabOrders.setDamaged();
+        }
+    }
+
+    public void destroyBoat()
+    {
+        //TurnManager.Instance.boats.Remove(this);
+        GameObject dead = Instantiate(TurnManager.Instance.deadBoatPrefab, transform.position, transform.rotation);
+        Destroy(this, 0.1f);
+        Destroy(dead, 2f);
+    }
+
+    public bool CheckCollision()
+    {
+        foreach (BoatController boat in TurnManager.Instance.boats)
+        {
+            if (boat != this && boat.currentCell == this.currentCell)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

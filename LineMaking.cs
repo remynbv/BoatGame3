@@ -47,7 +47,7 @@ public class LineMaking : MonoBehaviour
             return;
         }
 
-        // Simulate the command queue
+        // Simulate command queue
         Vector3Int simCell = boat.currentCell;
         int simFacing = boat.GetFacing();
         int simSpeed = boat.speed;
@@ -55,7 +55,7 @@ public class LineMaking : MonoBehaviour
         List<Vector3> pathPoints = new List<Vector3>();
         pathPoints.Add(tilemap.GetCellCenterWorld(simCell));
 
-        // Copy the queue for simulation
+        // Copy queue for simulation
         var commands = new List<BoatCommand>(boat.commandQueue);
         while (commands.Count < 3) commands.Insert(0, null); // Pad to 3 for color mapping
 
@@ -97,18 +97,25 @@ public class LineMaking : MonoBehaviour
             else if (cmd.commandType == BoatCommandType.RotateRight)
                 simFacing = (simFacing + 1) % 6;
 
-            // Draw this segment
+            // Draw segment
+            
             lineRenderers[i].positionCount = pathPoints.Count;
             lineRenderers[i].SetPositions(pathPoints.ToArray());
             lineRenderers[i].startColor = lineRenderers[i].endColor = commandColors[i];
+            
         }
 
-        // Draw arrowhead at the end
+        // Draw arrowhead
         if (arrowheadInstance)
         {
             arrowheadInstance.SetActive(true);
             arrowheadInstance.transform.position = pathPoints[pathPoints.Count - 1];
             arrowheadInstance.transform.rotation = Quaternion.Euler(0, 0, -simFacing * 60f + 90);
+            if (simSpeed < 0) // If moving backward, flip the arrow
+            {
+                arrowheadInstance.transform.rotation *= Quaternion.Euler(0, 0, 180);
+            }
         }
+        
     }
 }
