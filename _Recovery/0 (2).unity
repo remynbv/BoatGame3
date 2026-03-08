@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 216866190}
   - component: {fileID: 216866189}
   - component: {fileID: 216866188}
-  - component: {fileID: 216866191}
+  - component: {fileID: 216866187}
   m_Layer: 5
   m_Name: FireBackLeft
   m_TagString: Untagged
@@ -574,6 +574,22 @@ RectTransform:
   m_AnchoredPosition: {x: 230, y: -250}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &216866187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216866185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5daeca6ca943f5b4eb0d943c7b4eca7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandButton
+  boatCommand:
+    commandType: 4
+  fireCommand:
+    fireCommandType: 1
 --- !u!114 &216866188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,8 +634,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 216866191}
-        m_TargetAssemblyTypeName: FireButton, Assembly-CSharp
+      - m_Target: {fileID: 216866187}
+        m_TargetAssemblyTypeName: CommandButton, Assembly-CSharp
         m_MethodName: sendFireCommand
         m_Mode: 1
         m_Arguments:
@@ -668,20 +684,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216866185}
   m_CullTransparentMesh: 1
---- !u!114 &216866191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216866185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5496a0dce72416a812a61bdb7a8cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireButton
-  fireCommand:
-    fireCommandType: 1
 --- !u!1 &277241912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,7 +1342,7 @@ GameObject:
   - component: {fileID: 606116124}
   - component: {fileID: 606116123}
   - component: {fileID: 606116122}
-  - component: {fileID: 606116125}
+  - component: {fileID: 606116121}
   m_Layer: 5
   m_Name: NoFireButton
   m_TagString: Untagged
@@ -1368,6 +1370,22 @@ RectTransform:
   m_AnchoredPosition: {x: 300, y: -285}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &606116121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606116119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5daeca6ca943f5b4eb0d943c7b4eca7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandButton
+  boatCommand:
+    commandType: 4
+  fireCommand:
+    fireCommandType: 0
 --- !u!114 &606116122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,8 +1430,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 606116125}
-        m_TargetAssemblyTypeName: FireButton, Assembly-CSharp
+      - m_Target: {fileID: 606116121}
+        m_TargetAssemblyTypeName: CommandButton, Assembly-CSharp
         m_MethodName: sendFireCommand
         m_Mode: 1
         m_Arguments:
@@ -1462,20 +1480,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606116119}
   m_CullTransparentMesh: 1
---- !u!114 &606116125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 606116119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5496a0dce72416a812a61bdb7a8cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireButton
-  fireCommand:
-    fireCommandType: 0
 --- !u!1 &606668783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,6 +1628,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CommandButton
   boatCommand:
     commandType: 1
+  fireCommand:
+    fireCommandType: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2222,7 +2228,7 @@ GameObject:
   - component: {fileID: 744191182}
   - component: {fileID: 744191181}
   - component: {fileID: 744191180}
-  - component: {fileID: 744191183}
+  - component: {fileID: 744191179}
   m_Layer: 5
   m_Name: FireFrontRightButton
   m_TagString: Untagged
@@ -2250,6 +2256,22 @@ RectTransform:
   m_AnchoredPosition: {x: 370, y: -175}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &744191179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744191177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5daeca6ca943f5b4eb0d943c7b4eca7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandButton
+  boatCommand:
+    commandType: 4
+  fireCommand:
+    fireCommandType: 4
 --- !u!114 &744191180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2294,8 +2316,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 744191183}
-        m_TargetAssemblyTypeName: FireButton, Assembly-CSharp
+      - m_Target: {fileID: 744191179}
+        m_TargetAssemblyTypeName: CommandButton, Assembly-CSharp
         m_MethodName: sendFireCommand
         m_Mode: 1
         m_Arguments:
@@ -2344,20 +2366,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 744191177}
   m_CullTransparentMesh: 1
---- !u!114 &744191183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744191177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5496a0dce72416a812a61bdb7a8cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireButton
-  fireCommand:
-    fireCommandType: 4
 --- !u!1 &747815177
 GameObject:
   m_ObjectHideFlags: 0
@@ -2506,6 +2514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CommandButton
   boatCommand:
     commandType: 3
+  fireCommand:
+    fireCommandType: 0
 --- !u!1 &749064491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3151,7 +3161,7 @@ GameObject:
   - component: {fileID: 1012700522}
   - component: {fileID: 1012700521}
   - component: {fileID: 1012700520}
-  - component: {fileID: 1012700523}
+  - component: {fileID: 1012700519}
   m_Layer: 5
   m_Name: FireBackRight
   m_TagString: Untagged
@@ -3179,6 +3189,22 @@ RectTransform:
   m_AnchoredPosition: {x: 370, y: -250}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1012700519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012700517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5daeca6ca943f5b4eb0d943c7b4eca7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandButton
+  boatCommand:
+    commandType: 4
+  fireCommand:
+    fireCommandType: 2
 --- !u!114 &1012700520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3223,8 +3249,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1012700523}
-        m_TargetAssemblyTypeName: FireButton, Assembly-CSharp
+      - m_Target: {fileID: 1012700519}
+        m_TargetAssemblyTypeName: CommandButton, Assembly-CSharp
         m_MethodName: sendFireCommand
         m_Mode: 1
         m_Arguments:
@@ -3273,51 +3299,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012700517}
   m_CullTransparentMesh: 1
---- !u!114 &1012700523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012700517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5496a0dce72416a812a61bdb7a8cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireButton
-  fireCommand:
-    fireCommandType: 0
---- !u!1 &1033984670
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1033984671}
-  m_Layer: 0
-  m_Name: Combat
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1033984671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033984670}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.15876, y: 0.16739, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1071665222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3501,6 +3482,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e1e23102-46f5-4e55-8894-d2d9b4b6c755
     m_ActionName: 'Movement/NoAction[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ed7e6204-99f6-4c1a-b2fb-e15a533fcfe9
+    m_ActionName: 'Combat/FireFrontLeft[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: df82d054-6ef4-4786-bbbf-27fc04cbe853
+    m_ActionName: 'Combat/FireFrontRight[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 46065380-7d38-4095-a635-59acb787a137
+    m_ActionName: 'Combat/FireBackLeft[/Keyboard/z]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b60c51ae-abf0-4095-8b4b-724999ef536e
+    m_ActionName: 'Combat/FireBackRight[/Keyboard/c]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9e04a9fa-33a6-4b14-9308-4f7c79a510c4
+    m_ActionName: 'Combat/NoFire[/Keyboard/x]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: BoatControls
   m_DefaultActionMap: Movement
@@ -3715,6 +3716,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CommandButton
   boatCommand:
     commandType: 4
+  fireCommand:
+    fireCommandType: 0
 --- !u!1 &1122920150
 GameObject:
   m_ObjectHideFlags: 0
@@ -4001,7 +4004,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -430, y: 220}
+  m_AnchoredPosition: {x: -400, y: 220}
   m_SizeDelta: {x: 15, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1205252681
@@ -4130,7 +4133,7 @@ GameObject:
   - component: {fileID: 1250985463}
   - component: {fileID: 1250985462}
   - component: {fileID: 1250985461}
-  - component: {fileID: 1250985464}
+  - component: {fileID: 1250985460}
   m_Layer: 5
   m_Name: FireFrontLeftButton
   m_TagString: Untagged
@@ -4158,6 +4161,22 @@ RectTransform:
   m_AnchoredPosition: {x: 230, y: -175}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1250985460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250985458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5daeca6ca943f5b4eb0d943c7b4eca7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandButton
+  boatCommand:
+    commandType: 4
+  fireCommand:
+    fireCommandType: 3
 --- !u!114 &1250985461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4202,8 +4221,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1250985464}
-        m_TargetAssemblyTypeName: FireButton, Assembly-CSharp
+      - m_Target: {fileID: 1250985460}
+        m_TargetAssemblyTypeName: CommandButton, Assembly-CSharp
         m_MethodName: sendFireCommand
         m_Mode: 1
         m_Arguments:
@@ -4214,18 +4233,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CommandButton, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
 --- !u!114 &1250985462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4264,20 +4271,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250985458}
   m_CullTransparentMesh: 1
---- !u!114 &1250985464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250985458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5496a0dce72416a812a61bdb7a8cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireButton
-  fireCommand:
-    fireCommandType: 3
 --- !u!1 &1272747327
 GameObject:
   m_ObjectHideFlags: 0
@@ -4315,7 +4308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 220}
+  m_AnchoredPosition: {x: -340, y: 220}
   m_SizeDelta: {x: 15, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1272747329
@@ -4644,6 +4637,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308317488}
   m_CullTransparentMesh: 1
+--- !u!1 &1448206464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1448206465}
+  m_Layer: 0
+  m_Name: Combat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1448206465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448206464}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.15876, y: 0.16739, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1719583487
 GameObject:
   m_ObjectHideFlags: 0
@@ -4929,6 +4953,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CommandButton
   boatCommand:
     commandType: 2
+  fireCommand:
+    fireCommandType: 0
 --- !u!1 &1899488464
 GameObject:
   m_ObjectHideFlags: 0
@@ -11470,6 +11496,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CommandButton
   boatCommand:
     commandType: 0
+  fireCommand:
+    fireCommandType: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -11485,4 +11513,4 @@ SceneRoots:
   - {fileID: 1298766634}
   - {fileID: 432294255}
   - {fileID: 720584298}
-  - {fileID: 1033984671}
+  - {fileID: 1448206465}

@@ -20,24 +20,29 @@ public class TurnManager : MonoBehaviour
         actions = new BoatActions();
         actions.Movement.Execute.performed += ctx =>
         {
-            callExecuteTurn(); 
+            callExecuteTurn();
         };
     }
 
     public void callExecuteTurn()
     {
         foreach (BoatController boat in boats)
-        {
-            while (boat.commandQueue.Count < boat.maxCommands)
+            {
+                while (boat.commandQueue.Count < boat.maxCommands)
+                {
+                    boat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
+                }
+                while(boat.fireQueue.Count < boat.maxFireCommands)
+                {
+                    boat.fireQueue.Add(new FireCommand(FireCommandType.Nothing));
+                }
+            }
+            StartCoroutine(ExecuteTurn());
+            foreach (BoatController boat in boats)
             {
                 boat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
+                boat.AddFireCommand(new FireCommand(FireCommandType.Nothing));
             }
-        }
-        StartCoroutine(ExecuteTurn());
-        foreach (BoatController boat in boats)
-        {
-            boat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
-        }
     }
 
     private void OnEnable()
@@ -134,11 +139,32 @@ public class TurnManager : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(pauseTime);
+
+            //Firing
+            foreach (BoatController boat in boats)
+            {
+                if(boat.fireQueue.Count == 0)
+                {
+                    continue;
+                }
+
+                FireCommand fire = boat.fireQueue[0];
+                if (fire.fireCommandType != FireCommandType.Nothing)
+                {
+
+                    Combat.Instance.Fire(boat, fire);
+                }
+            }
+            yield return new WaitForSeconds(pauseTime);
         }
         foreach (BoatController boat in boats)
         {
             boat.commandQueue.RemoveAt(0);
             boat.hasCrashed = false;
+            if (boat.fireQueue.Count > 0)
+            {
+                boat.fireQueue.RemoveAt(0);
+            }
             if (boat.CheckCollision()) 
             {
                 boat.takeDamage();

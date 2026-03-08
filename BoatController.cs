@@ -4,8 +4,10 @@ using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 public class BoatController : MonoBehaviour
 {
+    public bool isEvil;
     public Tilemap tilemap;
     public Vector3Int currentCell;  // current pos
+
     private int facing = 0;         // Facing Dir    
 
     public int speed = 0;
@@ -13,8 +15,10 @@ public class BoatController : MonoBehaviour
     public int maxSpeed = 4;
 
     public List<BoatCommand> commandQueue = new List<BoatCommand>();
-    public int maxCommands = 3;
+    public List<FireCommand> fireQueue = new List<FireCommand>();
 
+    public int maxCommands = 3;
+    public int maxFireCommands = 3;
     public bool Selected = false;
     public bool hasCrashed = false;
 
@@ -33,7 +37,18 @@ public class BoatController : MonoBehaviour
             }
         }
     }
+    public void AddFireCommand(FireCommand command)
+    {
+        if (TurnManager.Instance.ordersOpen)
+        {
+            fireQueue.Add(command);
+            if (fireQueue.Count > maxFireCommands)
+            {
+                fireQueue.RemoveAt(maxFireCommands-1);
+            }
+        }
 
+    }
     private BoatActions actions;
     /* 
     0 = Top
@@ -65,7 +80,16 @@ public class BoatController : MonoBehaviour
 
     void Start()
     {
-        SnapToGrid();
+        SnapToGrid(); 
+        if (isEvil)
+        {
+        facing = 3; 
+        }
+
+    RotatePic();
+    SnapToGrid();
+    TurnManager.Instance.boats.Add(this);
+    boatImage = GetComponent<SpriteRenderer>();
         TurnManager.Instance.boats.Add(this);
         boatImage = GetComponent<SpriteRenderer>();
     }
@@ -198,5 +222,19 @@ public class BoatController : MonoBehaviour
         }
         return false;
     }
-
+    public int FiringDirection(FireCommandType cmd)
+    {
+        switch (cmd)
+        {
+            case FireCommandType.FireFrontLeft:
+                return (facing+5)%6;
+            case FireCommandType.FireFrontRight:
+                return (facing+5)%6;
+            case FireCommandType.FireBackRight:
+                return (facing+2)%6;
+            case FireCommandType.FireBackLeft:
+                return (facing+4)%6;  
+        }   
+        return -1;
+    }
 }
