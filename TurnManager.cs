@@ -55,11 +55,6 @@ public class TurnManager : MonoBehaviour
 
     private void shoot(BoatController boat)
     {
-<<<<<<< HEAD
-        //print("boat " + boat.name + " is checking fire commands");
-=======
-        print("boat " + boat.name + " is checking fire commands");
->>>>>>> e52d7214c2316f8cb6876ac218bce44b6cf22818
         if(boat.fireQueue.Count == 0 || boat.fireQueue[0].fireCommandType == FireCommandType.Nothing)
         {
             return;
@@ -69,11 +64,6 @@ public class TurnManager : MonoBehaviour
         {
             Combat.Instance.Fire(boat, fire);
         }
-<<<<<<< HEAD
-        //print("boat " + boat.name + " is firing " + fire.fireCommandType);
-=======
-        print("boat " + boat.name + " is firing " + fire.fireCommandType);
->>>>>>> e52d7214c2316f8cb6876ac218bce44b6cf22818
         Combat.Instance.Fire(boat, fire);
     }
 
@@ -201,11 +191,7 @@ public class TurnManager : MonoBehaviour
         foreach (BoatController boat in boats)
         {
             boat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
-<<<<<<< HEAD
             //boat.AddFireCommand(new FireCommand(FireCommandType.Nothing));
-=======
-            boat.AddFireCommand(new FireCommand(FireCommandType.Nothing));
->>>>>>> e52d7214c2316f8cb6876ac218bce44b6cf22818
         }
     }
 
