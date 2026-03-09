@@ -37,14 +37,15 @@ public class TurnManager : MonoBehaviour
                 }
                 while(boat.fireQueue.Count < boat.maxFireCommands)
                 {
-                    boat.fireQueue.Add(new FireCommand(FireCommandType.Nothing));
+                    
+                    boat.AddFireCommand(new FireCommand(FireCommandType.Nothing));
                 }
             }
             StartCoroutine(ExecuteTurn());
             foreach (BoatController boat in boats)
             {
                 boat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
-                boat.AddFireCommand(new FireCommand(FireCommandType.Nothing));
+            //oat.fireQueue.Add(new FireCommand(FireCommandType.Nothing));
             }
     }
 
@@ -144,10 +145,7 @@ public class TurnManager : MonoBehaviour
         {
             boat.commandQueue.RemoveAt(0);
             boat.hasCrashed = false;
-            if (boat.fireQueue.Count > 0)
-            {
-                boat.fireQueue.RemoveAt(0);
-            }
+            
             if (boat.CheckCollision()) 
             {
                 boat.takeDamage();
@@ -158,20 +156,29 @@ public class TurnManager : MonoBehaviour
         //Firing
         foreach (BoatController boat in boats)
         {
-            if(boat.fireQueue.Count == 0)
+            print("boat " + boat.name + " is checking fire commands");
+            if(boat.fireQueue.Count == 0 || boat.fireQueue[0].fireCommandType == FireCommandType.Nothing)
             {
                 continue;
             }
-
+            print("boat " + boat.name + " has " + boat.fireQueue + " fire commands in queue");
             FireCommand fire = boat.fireQueue[0];
-            if (fire.fireCommandType != FireCommandType.Nothing)
-            {
 
-                Combat.Instance.Fire(boat, fire);
-            }
+            print("boat " + boat.name + " is firing " + fire.fireCommandType);
+
+            Combat.Instance.Fire(boat, fire);
+
         }
         yield return new WaitForSeconds(pauseTime);
 
+
+        foreach (BoatController boat in boats)
+        {
+            if (boat.fireQueue.Count > 0)
+            {
+                boat.fireQueue.RemoveAt(0);
+            }
+        }
         foreach (BoatController boat in deadBoats)
         {
             if (BoatSelection.SelectedBoat == boat)

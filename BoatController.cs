@@ -225,7 +225,7 @@ public class BoatController : MonoBehaviour
             case FireCommandType.FireFrontLeft:
                 return (facing+5)%6;
             case FireCommandType.FireFrontRight:
-                return (facing+5)%6;
+                return (facing+1)%6;
             case FireCommandType.FireBackRight:
                 return (facing+2)%6;
             case FireCommandType.FireBackLeft:

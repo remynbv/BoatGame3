@@ -19,26 +19,28 @@ public class Combat : MonoBehaviour
             print("something has gone horribly wrong...");
             return;
         }
-        
         Vector3Int cell = boat.currentCell;
         for(int i = 0; i<firingRange; i++) // change this loop var to adjust range
         {
+            
+
             var dirs = boat.GetDirs(cell.y);
             cell+=dirs[dir];
-
-
-        }
-
-
-        foreach (BoatController b in TurnManager.Instance.boats)
-        {
-            if (b.currentCell == cell)
+            print("boat " + boat.name + "is firing to cell" + cell);
+            foreach (BoatController b in TurnManager.Instance.boats)
             {
-                b.takeDamage();
-                return;
+                
+                if (b.currentCell == cell)
+                {
+                    print("boat " +b.name + " has been hit :(");
+                    b.takeDamage();
+                    return;
+                }
+            
             }
+        
         }
-    }
     
+    }
 }
 
