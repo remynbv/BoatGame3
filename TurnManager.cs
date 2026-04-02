@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public enum gameType
 {
@@ -185,14 +186,6 @@ public class TurnManager : MonoBehaviour
                         {
                             boat.Backward();
                         }
-                        if (boat.commandQueue[0].commandType == BoatCommandType.RotateLeft)
-                        {
-                            boat.RotateLeft();
-                        }
-                        else if (boat.commandQueue[0].commandType == BoatCommandType.RotateRight)
-                        {
-                            boat.RotateRight();
-                        }
                         break;
                 }
                 if (!boat.hasCrashed && boat.CheckCollision())
@@ -208,6 +201,17 @@ public class TurnManager : MonoBehaviour
                     boat.hasCrashed = true;
                     boat.speed = 0;
                     boat.Backward();
+                }
+                if (i == 12)
+                {
+                    if (boat.commandQueue[0].commandType == BoatCommandType.RotateLeft)
+                    {
+                        boat.RotateLeft();
+                    }
+                    else if (boat.commandQueue[0].commandType == BoatCommandType.RotateRight)
+                    {
+                        boat.RotateRight();
+                    }
                 }
             }
             yield return new WaitForSeconds(pauseTime);
@@ -247,14 +251,49 @@ public class TurnManager : MonoBehaviour
             boat.destroyBoat();
         }
         deadBoats.Clear();
+        CheckWinCondition();
         yield return new WaitForSeconds(pauseTime*4);
         ordersOpen = true;
         //print("Turn over");
-        foreach (BoatController boat in boats)
+        foreach (BoatController boat in goodBoats)
         {
             boat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
             boat.AddFireCommand(new FireCommand(FireCommandType.Nothing));
         }
+        if (gameMode != gameType.Singleplayer)
+        {
+            foreach (BoatController boat in evilBoats)
+            {
+                boat.AddCommand(new BoatCommand(BoatCommandType.Nothing));
+                boat.AddFireCommand(new FireCommand(FireCommandType.Nothing));
+            }
+        }
     }
-
+    private void CheckWinCondition()
+    {
+        if (goodBoats.Count == 0)
+        {
+            SceneManager.LoadScene("WinEvilBoat");
+        }
+        else if (evilBoats.Count == 0)
+        {
+            SceneManager.LoadScene("WinGoodBoat");
+        }
+    }
+    public void killAllGood()
+    {
+        foreach (BoatController boat in goodBoats)
+        {
+            boat.takeDamage();
+            boat.takeDamage();
+        }
+    }
+    public void killAllEvil()
+    {
+        foreach (BoatController boat in evilBoats)
+        {
+            boat.takeDamage();
+            boat.takeDamage();
+        }
+    }
 }

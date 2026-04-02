@@ -17,4 +17,9 @@ public class MainMenu : MonoBehaviour
         return;
        // SceneManager.LoadScene("MPOnline");
     }  
+
+    public void BackToMain()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }

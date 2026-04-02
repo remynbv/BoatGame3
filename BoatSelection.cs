@@ -45,9 +45,12 @@ public class BoatSelection : MonoBehaviour
 
             if (clickObject)
             {
-                BoatController boat = clickObject.GetComponentInParent<BoatController>();
+                BoatController boat = clickObject.GetComponentInParent<BoatController>(); 
                 if (boat)
                 {
+                    if (((TurnManager.Instance.gameMode == gameType.Singleplayer || currentTurn == Turn.Good) && boat.isEvil) || currentTurn == Turn.Evil && !boat.isEvil){
+                        return;
+                    } 
                     SelectBoat(boat);
                 }
             }
