@@ -171,12 +171,18 @@ public class EnemyPathfinding: MonoBehaviour
             path.Add(false);
         }
         Vector3Int currentPos = pos;
+        Vector3Int nextPos = pos;
         for (int i = 0; i < phantomSpeed; i++)
-        {
-            if (!tilemap.HasTile(currentPos + BoatController.GetDirs(currentPos.y, facing, phantomSpeed)) && isIsland(currentPos + BoatController.GetDirs(currentPos.y, facing, phantomSpeed)))
+        { 
+            nextPos = currentPos + BoatController.GetDirs(currentPos.y, facing, phantomSpeed);
+            if (!tilemap.HasTile(nextPos))
             {
-                path[i] = true;
-                currentPos = currentPos + BoatController.GetDirs(currentPos.y, facing, phantomSpeed);
+                if (isIsland(nextPos))
+                {
+                    path[i] = true;
+                } else {
+                    currentPos = nextPos;
+                }
             }
         }
         return path;
