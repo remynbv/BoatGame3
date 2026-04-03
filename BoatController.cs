@@ -96,6 +96,7 @@ public class BoatController : MonoBehaviour
         SnapToGrid();
         TurnManager.Instance.boats.Add(this);
         boatImage = GetComponent<SpriteRenderer>();
+        AddCommand(new BoatCommand(BoatCommandType.Forward));
         AddFireCommand(new FireCommand(FireCommandType.Nothing));
         AddFireCommand(new FireCommand(FireCommandType.Nothing));
         AddFireCommand(new FireCommand(FireCommandType.Nothing));
